@@ -30,15 +30,26 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'lifepillar/vim-solarized8'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'tpope/vim-fugitive'
+Plug 'vim-airline/vim-airline'
 Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'HerringtonDarkholme/yats.vim' 
+Plug 'HerringtonDarkholme/yats.vim'
 Plug 'preservim/nerdcommenter'
 Plug 'airblade/vim-gitgutter'
 
 call plug#end()
+
+ "Solarized theme for VIM
+" Had initial problems setting up solarized8 with Iterm2
+" This helped resolve the issue <https://github.com/lifepillar/vim-solarized8/issues/38>
+set termguicolors
+set background=dark
+let g:solarized_contrast="high"
+let g:solarized_termtrans=1
+colorscheme solarized8
 
 inoremap jj <ESC>
 noremap 9 $
@@ -80,11 +91,11 @@ endfunction
 " fzf
 nnoremap <silent> <C-p> :GFiles<CR>
 nnoremap <silent> <C-o> :Buffers<CR>
-nnoremap <C-f> :Rg 
+nnoremap <C-f> :Rg
 
-if executable('rg')
-    let g:rg_derive_root='true'
-endif
+"if executable('rg')
+    "let g:rg_derive_root='true'
+"endif
 
 map <Bslash><Bslash> <plug>NERDCommenterToggle
 
@@ -93,9 +104,9 @@ let g:coc_global_extensions = [
     \ 'coc-snippets',
     \ 'coc-pairs',
     \ 'coc-tsserver',
-    \ 'coc-eslint', 
-    \ 'coc-prettier', 
-    \ 'coc-json', 
+    \ 'coc-eslint',
+    \ 'coc-prettier',
+    \ 'coc-json',
     \ ]
 
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
@@ -218,12 +229,17 @@ nnoremap <silent><nowait> ,k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> ,p  :<C-u>CocListResume<CR>
 
- "Solarized theme for VIM
-" Had initial problems setting up solarized8 with Iterm2
-" This helped resolve the issue <https://github.com/lifepillar/vim-solarized8/issues/38> 
-set termguicolors
-set background=dark
-let g:solarized_contrast="high"
-let g:solarized_termtrans=1
-colorscheme solarized8
 
+" fugitive
+" merges file from rhs
+nmap <leader>gj :diffget //3<CR>
+" merges file from lhs
+nmap <leader>gf :diffget //2<CR>
+" git status, stage and unstage files
+nmap <leader>gs :G<CR>
+
+" gitgutter
+nmap <leader>] <Plug>(GitGutterNextHunk)
+nmap <leader>[ <Plug>(GitGutterPrevHunk)
+nmap <leader>gp <Plug>(GitGutterPreviewHunk)
+let g:gitgutter_map_keys=0
