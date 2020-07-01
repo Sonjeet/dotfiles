@@ -1,5 +1,7 @@
 syntax on
 
+set shell=sh
+set encoding=UTF-8
 set noerrorbells
 set tabstop=4 softtabstop=4
 set shiftwidth=4
@@ -34,8 +36,10 @@ Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'ryanoasis/vim-devicons'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'preservim/nerdcommenter'
 Plug 'airblade/vim-gitgutter'
@@ -88,14 +92,28 @@ endfunction
 " Highlight currently open buffer in NERDTree
 "autocmd BufEnter * call SyncTree()
 
+" nerdtree git plugin
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ 'Ignored'   : '☒',
+    \ "Unknown"   : "?"
+    \ }
+
+" nerdtree syntax
+let g:NERDTreeLimitedSyntax = 1
+let g:NERDTreeLimitedSyntaxEnabledExtensions = [".css", ".go", ".html", ".jpg", ".js", ".json", ".jsx", ".less", ".markdown", ".md", ".png", ".scss", ".sql", ".vim"]
+
 " fzf
 nnoremap <silent> <C-p> :GFiles<CR>
 nnoremap <silent> <C-o> :Buffers<CR>
 nnoremap <C-f> :Rg
-
-"if executable('rg')
-    "let g:rg_derive_root='true'
-"endif
 
 map <Bslash><Bslash> <plug>NERDCommenterToggle
 
@@ -232,9 +250,9 @@ nnoremap <silent><nowait> ,p  :<C-u>CocListResume<CR>
 
 " fugitive
 " merges file from rhs
-nmap <leader>gj :diffget //3<CR>
+nmap <leader>gk :diffget //3<CR>
 " merges file from lhs
-nmap <leader>gf :diffget //2<CR>
+nmap <leader>gj :diffget //2<CR>
 " git status, stage and unstage files
 nmap <leader>gs :G<CR>
 
