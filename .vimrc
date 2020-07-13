@@ -71,7 +71,8 @@ nnoremap <leader>l :wincmd l<CR>
 
 " NERD Tree
 let g:NERDTreeGitStatusWithFlags = 1
-let g:NERDTreeIgnore = ['^node_modules$']
+let g:NERDTreeIgnore = ['^node_modules$', '^.DS_Store$']
+let g:NERDTreeShowHidden=1
 nmap <C-n> :NERDTreeToggle<CR>
 
 " sync open file with NERDTree
@@ -127,7 +128,9 @@ let g:coc_global_extensions = [
     \ 'coc-json',
     \ ]
 
-command! -nargs=0 Prettier :CocCommand prettier.formatFile
+"command! -nargs=0 Prettier :CocCommand prettier.formatFile
+command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile')
+
 
 " vim wont update to latest version, so just suppress warning msg for now
 let g:coc_disable_startup_warning = 1
